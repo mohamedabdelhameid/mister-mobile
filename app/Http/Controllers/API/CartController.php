@@ -15,12 +15,18 @@ class CartController extends Controller
     public function store()
     {
         $cart = Cart::firstOrCreate(['user_id' => $this->user->id]);
-
+        $cart->updateTotalPrice();
         return $this->sendSuccess('Cart Created Successfully!', $cart, 201);
     }
      public function index()
     {
+<<<<<<< HEAD
         $cart = Cart::where('user_id', $this->user->id)->with(['cartItems.product' , 'cartItems.product.colors'])->first();
+=======
+        $cart = Cart::where('user_id', $this->user->id)
+            ->with(['cartItems.product', 'cartItems.color'])
+            ->first();
+>>>>>>> fb06b1230c2414e805e4d0e9816085914eba2a68
         if (!$cart || optional($cart->cartItems)->isEmpty()) {
             return $this->sendSuccess("Cart is empty!");
         }
@@ -30,7 +36,7 @@ class CartController extends Controller
     {
         $cart = Cart::where('user_id', $this->user->id)->firstOrFail();
         $cart->cartItems()->delete();
-        $cart->update(['total_price' => 0]);
+        $cart->updateTotalPrice();
         return $this->sendSuccess('Cart items deleted successfully!');
     }
 }

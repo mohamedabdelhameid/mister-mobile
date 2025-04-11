@@ -2,12 +2,9 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\{Hash, Validator,Mail};
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\VerifyEmail;
-use App\Mail\ResetPassword;
+use App\Mail\{VerifyEmail, ResetPassword};
 class AuthUserController extends Controller
 {
     public function __construct()
@@ -101,7 +98,7 @@ class AuthUserController extends Controller
             'message' => 'Email verified successfully. You can now log in.',
             'user' => [
                 'id' => $user->id,
-                'name' => $user->name,
+                'name' => $user->first_name ." ". $user->last_name,
                 'email' => $user->email,
                 'email_verified_at' => $user->email_verified_at
             ]
