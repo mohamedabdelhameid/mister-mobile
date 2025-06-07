@@ -1,14 +1,15 @@
 <?php
 namespace App\Http\Controllers\API;
 use App\Models\Brand;
-use App\traits\ResponseJsonTrait;
 use App\Http\Requests\BrandRequest;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\File;
+use App\Http\Resources\{MobileResource, AccessoryResource};
+use App\Traits\{ResponseJsonTrait, UploadImageTrait};
 
 class BrandController extends Controller
 {
-    use ResponseJsonTrait;
+    use ResponseJsonTrait, UploadImageTrait;
+    protected string $uploadFolder = 'brands';
     public function __construct()
     {
         $this->middleware('auth:admins')->only(['store', 'update', 'destroy']);
@@ -22,10 +23,7 @@ class BrandController extends Controller
     {
         $data = $request->validated();
         if ($request->hasFile('image')) {
-            $originalName = $request->file('image')->getClientOriginalName();
-            $imageName = time() . '_' . $originalName;
-            $request->file('image')->move(public_path('uploads/brands'), $imageName);
-            $data['image'] = asset('uploads/brands/' . $imageName);
+            $data['image'] = $this->uploadImage($request->file('image'), $this->uploadFolder);
         } else {
             $data['image'] = null;
         }
@@ -34,21 +32,24 @@ class BrandController extends Controller
     }
     public function show(string $id)
     {
-        $brand = Brand::with(['mobiles', 'accessories'])->findOrFail($id);
-        return $this->sendSuccess('Brand Data Retrieved Successfully!', $brand);
+        $brand = Brand::findOrFail($id);
+        return $this->sendSuccess('Brand Data Retrieved Successfully!', [
+            'id' => $brand->id,
+            'name' => $brand->name,
+            'image' => $brand->image,
+            'mobiles' => MobileResource::collection($brand->mobiles),
+            'accessories' => AccessoryResource::collection($brand->accessories),
+        ]);
     }
     public function update(BrandRequest $request, string $id)
     {
         $brand = Brand::findOrFail($id);
         $data = $request->validated();
         if ($request->hasFile('image')) {
-            if ($brand->image && file_exists(public_path('uploads/brands/' . basename($brand->image)))) {
-                unlink(public_path('uploads/brands/' . basename($brand->image)));
+            if ($brand->image) {
+                $this->deleteImage($brand->image);
             }
-            $originalName = $request->file('image')->getClientOriginalName();
-            $imageName = time() . '_' . $originalName;
-            $request->file('image')->move(public_path('uploads/brands'), $imageName);
-            $data['image'] = asset('uploads/brands/' . $imageName);
+            $data['image'] = $this->uploadImage($request->file('image'), $this->uploadFolder);
         }
         $brand->update($data);
         return $this->sendSuccess('Brand Updated Successfully', $brand, 200);
@@ -56,12 +57,8 @@ class BrandController extends Controller
     public function destroy($id)
     {
         $brand = Brand::findOrFail($id);
-        if ($brand->image && !str_contains($brand->image, 'default.jpg')) {
-            $imageName = basename($brand->image);
-            $imagePath = public_path("uploads/brands/" . $imageName);
-            if (File::exists($imagePath)) {
-                File::delete($imagePath);
-            }
+        if ($brand->image) {
+            $this->deleteImage($brand->image);
         }
         $brand->delete();
         return $this->sendSuccess('Brand Data Removed Successfully');
