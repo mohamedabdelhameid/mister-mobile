@@ -17,7 +17,7 @@ class PaymentSuccessMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'تم استلام طلبك بنجاح - Mr. Mobiles',
+            subject: 'تم استلام طلبك بنجاح - LUXA Store',
         );
     }
     public function content(): Content

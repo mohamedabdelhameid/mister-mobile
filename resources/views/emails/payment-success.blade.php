@@ -111,8 +111,8 @@
         </div>
 
         <div class="footer">
-            <p>شكراً لاختيارك Mr. Mobiles</p>
-            <p>لأي استفسارات، يرجى التواصل معنا على: support@mrmobiles.com</p>
+            <p>شكراً لاختيارك LUXA Store</p>
+            <p>لأي استفسارات، يرجى التواصل معنا</p>
         </div>
     </div>
 </body>

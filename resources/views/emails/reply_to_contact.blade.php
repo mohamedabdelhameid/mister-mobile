@@ -36,7 +36,7 @@
         <h2>👋 Hello, {{ $name }}!</h2>
         <p style="font-weight: 600 ; color: #0a7543;">{{ $replyMessage }}</p>
         <p>Best regards , </p>
-        <p> <strong>Mr-Mobiles Admin</strong> </p>
+        <p> <strong>LUXA Admin</strong> </p>
     </div>
     </div>
 </body>

@@ -52,7 +52,7 @@
 <body>
     <div class="email-container">
         <h2>👋 Hello, {{ $userName }}!</h2>
-        <p>Thank you for registering with <strong>Mr-Mobiles</strong> 🎉</p>
+        <p>Thank you for registering with <strong>LUXA Store</strong> 🎉</p>
         <p>Please verify your email by clicking the button below. <br />
             🔹 This link is valid for only <strong>30 minutes</strong>.
         </p>
@@ -61,7 +61,7 @@
         <div class="footer">
             <p>💡 Need help? Contact our support team anytime.</p>
             <p>Thanks, <br />
-                📱 <strong>The Mr-Mobiles Team</strong>
+                📱 <strong>The LUXA Team</strong>
             </p>
         </div>
     </div>

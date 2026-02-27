@@ -10,9 +10,9 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         Admin::create([
-            'name' => 'Mister Mobile Admin',
-            'email' => 'admin@mr-mobile.com',
-            'password' => Hash::make('mrmobile@2025'),
+            'name' => 'LUXA Store Admin',
+            'email' => 'admin@LUXA.com',
+            'password' => Hash::make('LUXAStore@2026'),
             'is_super_admin' => true,
         ]);
     }
