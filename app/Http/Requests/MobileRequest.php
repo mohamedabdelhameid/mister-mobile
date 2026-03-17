@@ -10,6 +10,11 @@ class MobileRequest extends FormRequest
     public function rules(): array
     {
         $mobileId = $this->route('id') ?? $this->route('mobile');
+
+        $imageRule = $mobileId
+        ? 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:4048'
+        : 'required|image|mimes:jpeg,png,jpg,gif,webp|max:4048';
+
         return [
             'title' => 'required|string|max:255|unique:mobiles,title,' . $mobileId,
             'brand_id' => 'required|exists:brands,id',
@@ -25,7 +30,7 @@ class MobileRequest extends FormRequest
             'camera' => 'nullable|string|max:255',
             'network_support' => 'required|string|max:255',
             'release_year' => 'required|integer|min:2000|max:' . date('Y'),
-            'image_cover' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:4048',
+            'image_cover' => $imageRule,
             'status' => 'required|in:available,out_of_stock,coming_soon',
         ];
     }
