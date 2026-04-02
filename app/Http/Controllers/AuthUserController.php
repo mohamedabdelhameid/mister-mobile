@@ -83,7 +83,7 @@ class AuthUserController extends Controller
         if (!$user->save()) {
             return response()->json(['error' => 'Failed to verify email. Please try again.'], 500);
         }
-        return redirect()->away('http://localhost:51673/login');
+        return redirect()->away('http://localhost:4201/login');
     }
     public function resendVerification(Request $request)
     {
