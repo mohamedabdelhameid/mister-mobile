@@ -111,7 +111,7 @@
         </div>
 
         <div class="footer">
-            <p>شكراً لاختيارك LUXA Store</p>
+            <p>شكراً لاختيارك mister mobile Store</p>
             <p>لأي استفسارات، يرجى التواصل معنا</p>
         </div>
     </div>

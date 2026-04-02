@@ -63,7 +63,7 @@
         <p>If you did not request this reset, you can safely ignore this email. Your password will remain unchanged.</p>
         <div class="footer">
             <p>📞 Need help? Contact our support team.</p>
-            <p>🛠️ <strong>The LUXA Team</strong></p>
+            <p>🛠️ <strong>mister mobile Team</strong></p>
         </div>
     </div>
 </body>
